@@ -15,10 +15,13 @@
   },
   "scripts": {
     "test": "test-runner test/*.js",
-    "docs": "jsdoc2md -t jsdoc2md/README.hbs lib/*.js > README.md; echo"
+    "docs": "jsdoc2md -t README.hbs load-module.js > README.md; echo"
   },
   "devDependencies": {
     "jsdoc-to-markdown": "^3.0.0",
     "test-runner": "^0.3.0"
+  },
+  "dependencies": {
+    "array-back": "^1.0.4"
   }
 }

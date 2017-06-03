@@ -3,7 +3,10 @@ const path = require('path')
 const arrayify = require('array-back')
 
 /**
+ * Load a module.
  * @module load-module
+ * @example
+ * const loadModule = require('load-module')
  */
 module.exports = loadModule
 
@@ -11,6 +14,10 @@ const attempted = []
 
 /**
  * @alias module:load-module
+ * @param {string} - module path
+ * @param [options] {object}
+ * @param [options.module-prefix] {string}
+ * @param [options.module-dir] {string|string[]}
  */
 function loadModule (modulePath, options) {
   options = Object.assign({ 'module-prefix': '' }, options)
@@ -41,7 +48,6 @@ function loadModule (modulePath, options) {
     }
     for (const potentialPath of pathsToTry) {
       try {
-        // console.error(potentialPath)
         result = require(potentialPath)
         break
       } catch (err) {}
