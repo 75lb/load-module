@@ -6,10 +6,7 @@
   "repository": "https://github.com/75lb/load-module.git",
   "license": "MIT",
   "main": "load-module.js",
-  "bin": {
-    "load-module": "bin/cli.js"
-  },
-  "keywords": [],
+  "keywords": [ "load", "require", "module", "package" ],
   "engines": {
     "node": ">=4.0.0"
   },
