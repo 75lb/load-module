@@ -33,24 +33,24 @@ runner.test('loadModule: unknown path, module-dir', function () {
 })
 
 runner.test('loadModule: absolute path to lib', function () {
-  const modulePath = path.resolve(__dirname, '..', 'node_modules/command-line-args/lib/command-line-args.js')
+  const modulePath = path.resolve(__dirname, '..', 'node_modules/array-back/lib/array-back.js')
   const module = loadModule(modulePath)
-  a.strictEqual(module.name, 'commandLineArgs')
+  a.strictEqual(module.name, 'arrayify')
 })
 
 runner.test('loadModule: full module name', function () {
-  const module = loadModule('command-line-args')
-  a.strictEqual(module.name, 'commandLineArgs')
+  const module = loadModule('array-back')
+  a.strictEqual(module.name, 'arrayify')
 })
 
 runner.test('loadModule: partial module name (module-prefix supplied)', function () {
-  const module = loadModule('line-args', { 'module-prefix': 'command-' })
-  a.strictEqual(module.name, 'commandLineArgs')
+  const module = loadModule('back', { 'module-prefix': 'array-' })
+  a.strictEqual(module.name, 'arrayify')
 })
 
 runner.test('loadModule: full module name (module-prefix supplied)', function () {
-  const module = loadModule('command-line-args', { 'module-prefix': 'command-' })
-  a.strictEqual(module.name, 'commandLineArgs')
+  const module = loadModule('back', { 'module-prefix': 'array-' })
+  a.strictEqual(module.name, 'arrayify')
 })
 
 runner.test('loadModule: full module name, current dir default', function () {
