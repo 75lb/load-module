@@ -38,6 +38,12 @@ runner.test('loadModule: absolute path to lib', function () {
   a.strictEqual(module.name, 'arrayify')
 })
 
+runner.test('loadModule: relative path to a dir', function () {
+  const modulePath = path.resolve(__dirname, 'fixture/loadModule/some-module')
+  const module = loadModule(modulePath)
+  a.strictEqual(module.name, 'someModule')
+})
+
 runner.test('loadModule: full module name', function () {
   const module = loadModule('array-back')
   a.strictEqual(module.name, 'arrayify')
