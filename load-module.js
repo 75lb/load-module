@@ -20,20 +20,20 @@ const attempted = []
  * @param [options.module-dir] {string|string[]}
  */
 function loadModule (modulePath, options) {
-  options = Object.assign({ 'module-prefix': '' }, options)
-  options['module-dir'] = arrayify(options['module-dir'])
+  options = Object.assign({ modulePrefix: '' }, options)
+  options.moduleDir = arrayify(options.moduleDir)
   let result
-  if (options['module-dir'] && options['module-dir'].length) {
-    for (const dir of arrayify(options['module-dir'])) {
+  if (options.moduleDir && options.moduleDir.length) {
+    for (const dir of arrayify(options.moduleDir)) {
       try {
-        result = loadModule(path.resolve(dir, modulePath), { 'module-prefix': options['module-prefix'] })
+        result = loadModule(path.resolve(dir, modulePath), { modulePrefix: options.modulePrefix })
         break
       } catch (err) {
         attempted.push(err.attempted)
       }
     }
     if (!result) {
-      return loadModule(modulePath, { 'module-prefix': options['module-prefix'] })
+      return loadModule(modulePath, { modulePrefix: options.modulePrefix })
     }
   } else {
     const pathsToTry = [
@@ -41,10 +41,10 @@ function loadModule (modulePath, options) {
       path.resolve(process.cwd(), modulePath),
       path.resolve(process.cwd(), 'node_modules', modulePath)
     ]
-    if (options['module-prefix']) {
-      pathsToTry.push(options['module-prefix'] + modulePath)
-      pathsToTry.push(path.resolve(path.dirname(modulePath), options['module-prefix'] + path.basename(modulePath)))
-      pathsToTry.push(path.resolve(path.dirname(modulePath), 'node_modules', options['module-prefix'] + path.basename(modulePath)))
+    if (options.modulePrefix) {
+      pathsToTry.push(options.modulePrefix + modulePath)
+      pathsToTry.push(path.resolve(path.dirname(modulePath), options.modulePrefix + path.basename(modulePath)))
+      pathsToTry.push(path.resolve(path.dirname(modulePath), 'node_modules', options.modulePrefix + path.basename(modulePath)))
     }
     for (const potentialPath of pathsToTry) {
       try {

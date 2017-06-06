@@ -22,7 +22,7 @@ runner.test('loadModule: unknown path, module-dir', function () {
   a.throws(
     () => {
       const mod = loadModule('./adsfdf', {
-        'module-dir': '/some/where/wrong'
+        moduleDir: '/some/where/wrong'
       })
       console.error(require('util').inspect(mod, { depth: 6, colors: true }))
     },
@@ -44,12 +44,12 @@ runner.test('loadModule: full module name', function () {
 })
 
 runner.test('loadModule: partial module name (module-prefix supplied)', function () {
-  const module = loadModule('back', { 'module-prefix': 'array-' })
+  const module = loadModule('back', { modulePrefix: 'array-' })
   a.strictEqual(module.name, 'arrayify')
 })
 
 runner.test('loadModule: full module name (module-prefix supplied)', function () {
-  const module = loadModule('back', { 'module-prefix': 'array-' })
+  const module = loadModule('back', { modulePrefix: 'array-' })
   a.strictEqual(module.name, 'arrayify')
 })
 
@@ -60,21 +60,21 @@ runner.test('loadModule: full module name, current dir default', function () {
 
 runner.test('loadModule: full module name, current dir default, module-dir', function () {
   const module = loadModule('test/fixture/loadModule/some-module', {
-    'module-dir': '/some/where'
+    moduleDir: '/some/where'
   })
   a.strictEqual(module.name, 'someModule')
 })
 
 runner.test('loadModule: full module name, module-dir', function () {
   const module = loadModule('some-module', {
-    'module-dir': path.resolve('test', 'fixture', 'loadModule')
+    moduleDir: path.resolve('test', 'fixture', 'loadModule')
   })
   a.strictEqual(module.name, 'someModule')
 })
 
 runner.test('loadModule: full module name, multiple module-dirs', function () {
   const module = loadModule('next-module', {
-    'module-dir': [
+    moduleDir: [
       path.resolve('test', 'fixture', 'loadModule'),
       path.resolve('test', 'fixture', 'loadModule2')
     ]
@@ -84,30 +84,30 @@ runner.test('loadModule: full module name, multiple module-dirs', function () {
 
 runner.test('loadModule: partial module name, multiple module-dirs, module-prefix', function () {
   const module = loadModule('module', {
-    'module-dir': [
+    moduleDir: [
       path.resolve('test', 'fixture', 'loadModule'),
       path.resolve('test', 'fixture', 'loadModule2')
     ],
-    'module-prefix': 'next-'
+    modulePrefix: 'next-'
   })
   a.strictEqual(module.name, 'nextModule')
 })
 
 runner.test('loadModule: full module name, multiple module-dirs, module-prefix', function () {
   const module = loadModule('next-module', {
-    'module-dir': [
+    moduleDir: [
       path.resolve('test', 'fixture', 'loadModule'),
       path.resolve('test', 'fixture', 'loadModule2')
     ],
-    'module-prefix': 'next-'
+    modulePrefix: 'next-'
   })
   a.strictEqual(module.name, 'nextModule')
 })
 
 runner.test('loadModule: partial module name (module-prefix supplied), module-dir', function () {
   const module = loadModule('module', {
-    'module-dir': path.resolve('test', 'fixture', 'loadModule'),
-    'module-prefix': 'some-'
+    moduleDir: path.resolve('test', 'fixture', 'loadModule'),
+    modulePrefix: 'some-'
   })
   a.strictEqual(module.name, 'someModule')
 })
