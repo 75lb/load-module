@@ -36,6 +36,7 @@ function loadModule (modulePath, options) {
       return loadModule(modulePath, { modulePrefix: options.modulePrefix })
     }
   } else {
+    if (modulePath.startsWith('.')) modulePath = path.resolve(modulePath)
     const pathsToTry = [
       modulePath,
       path.resolve(process.cwd(), modulePath),
