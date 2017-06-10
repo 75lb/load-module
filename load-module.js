@@ -54,7 +54,9 @@ function loadModule (modulePath, options) {
       } catch (err) {}
     }
     if (!result) {
-      const err = new Error(`module not found: ${modulePath}`)
+      let msg = `Module not found: ${modulePath}. Module paths attempted: `
+      msg += JSON.stringify(pathsToTry, null, '  ')
+      const err = new Error(msg)
       err.attempted = pathsToTry
       err.code = 'MODULE_NOT_FOUND'
       throw err
