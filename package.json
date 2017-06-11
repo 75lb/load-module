@@ -1,7 +1,7 @@
 {
   "name": "load-module",
   "author": "Lloyd Brookes <75pound@gmail.com>",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "load-module",
   "repository": "https://github.com/75lb/load-module.git",
   "license": "MIT",
