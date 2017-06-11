@@ -51,7 +51,9 @@ function loadModule (modulePath, options) {
       try {
         result = require(potentialPath)
         break
-      } catch (err) {}
+      } catch (err) {
+        if (err.code !== 'MODULE_NOT_FOUND') throw err
+      }
     }
     if (!result) {
       let msg = `Module not found: ${modulePath}. Module paths attempted: `

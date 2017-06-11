@@ -117,3 +117,14 @@ runner.test('loadModule: partial module name (module-prefix supplied), module-di
   })
   a.strictEqual(module.name, 'someModule')
 })
+
+runner.test('broken module', function () {
+  a.throws(
+    () => {
+      const mod = loadModule('./test/fixture/broken-module')
+    },
+    err => {
+      return err.code !== 'MODULE_NOT_FOUND'
+    }
+  )
+})
