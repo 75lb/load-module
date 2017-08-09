@@ -33,7 +33,7 @@ runner.test('loadModule: unknown path, module-dir', function () {
 })
 
 runner.test('loadModule: absolute path to lib', function () {
-  const modulePath = path.resolve(__dirname, '..', 'node_modules/array-back/lib/array-back.js')
+  const modulePath = path.resolve(__dirname, '..', 'node_modules/array-back/index.js')
   const module = loadModule(modulePath)
   a.strictEqual(module.name, 'arrayify')
 })
