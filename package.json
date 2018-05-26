@@ -16,11 +16,11 @@
   },
   "scripts": {
     "test": "test-runner test/*.js",
-    "docs": "jsdoc2md -t README.hbs load-module.js > README.md; echo"
+    "docs": "jsdoc2md -t README.hbs index.js > README.md; echo"
   },
   "devDependencies": {
-    "jsdoc-to-markdown": "^3.0.0",
-    "test-runner": "^0.4.1"
+    "jsdoc-to-markdown": "^4.0.1",
+    "test-runner": "^0.5.0"
   },
   "dependencies": {
     "array-back": "^2.0.0"
