@@ -3,7 +3,9 @@ const path = require('path')
 const arrayify = require('array-back')
 
 /**
- * Load a module.
+ * Like node's `require` but with a few extra features:
+ * - You can specify your folders in which to search for modules
+ * - You can specify a module prefix
  * @module load-module
  * @example
  * const loadModule = require('load-module')
@@ -14,10 +16,10 @@ const attempted = []
 
 /**
  * @alias module:load-module
- * @param {string} - module path
- * @param [options] {object}
- * @param [options.module-prefix] {string}
- * @param [options.module-dir] {string|string[]}
+ * @param {string} - module identifier
+ * @param {object} [options]
+ * @param {string} [options.modulePrefix] - If the input `moduleID` is `rewrite` and the `module-prefix` is `lws`, load-module will attempt to laod `lws-rewrite` then `rewrite`.
+ * @param {string|string[]} [options.moduleDir] - An additional location to search for modules.
  */
 function loadModule (modulePath, options) {
   options = Object.assign({ modulePrefix: '' }, options)

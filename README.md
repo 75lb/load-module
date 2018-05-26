@@ -7,7 +7,9 @@
 <a name="module_load-module"></a>
 
 ## load-module
-Load a module.
+Like node's `require` but with a few extra features:
+- You can specify your folders in which to search for modules
+- You can specify a module prefix
 
 **Example**  
 ```js
@@ -20,10 +22,10 @@ const loadModule = require('load-module')
 
 | Param | Type | Description |
 | --- | --- | --- |
-| modulePath | <code>string</code> | module path |
+| modulePath | <code>string</code> | module identifier |
 | [options] | <code>object</code> |  |
-| [options.module-prefix] | <code>string</code> |  |
-| [options.module-dir] | <code>string</code> \| <code>Array.&lt;string&gt;</code> |  |
+| [options.modulePrefix] | <code>string</code> | If the input `moduleID` is `rewrite` and the `module-prefix` is `lws`, load-module will attempt to laod `lws-rewrite` then `rewrite`. |
+| [options.moduleDir] | <code>string</code> \| <code>Array.&lt;string&gt;</code> | An additional location to search for modules. |
 
 
 * * *
