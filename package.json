@@ -2,7 +2,7 @@
   "name": "load-module",
   "author": "Lloyd Brookes <75pound@gmail.com>",
   "version": "0.2.5",
-  "description": "load-module",
+  "description": "Like node's require but with a few extra features.",
   "repository": "https://github.com/75lb/load-module.git",
   "license": "MIT",
   "keywords": [
@@ -14,9 +14,13 @@
   "engines": {
     "node": ">=4.0.0"
   },
+  "files": [
+      "index.js"
+  ],
   "scripts": {
     "test": "test-runner test/*.js",
-    "docs": "jsdoc2md -t README.hbs index.js > README.md; echo"
+    "docs": "jsdoc2md -t README.hbs index.js > README.md; echo",
+    "cover": "nyc --reporter=text-lcov npm test | coveralls"
   },
   "devDependencies": {
     "jsdoc-to-markdown": "^4.0.1",
