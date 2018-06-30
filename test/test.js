@@ -1,4 +1,3 @@
-'use strict'
 const TestRunner = require('test-runner')
 const loadModule = require('../')
 const a = require('assert')
@@ -6,81 +5,69 @@ const path = require('path')
 
 const runner = new TestRunner()
 
-runner.test('loadModule: unknown path', function () {
+runner.test('unknown request throws', function () {
   a.throws(
-    () => {
-      const mod = loadModule('./adsfdf')
-      console.error(require('util').inspect(mod, { depth: 6, colors: true }))
-    },
-    err => {
-      return err.code === 'MODULE_NOT_FOUND'
-    }
+    () => loadModule('./adsfdf'),
+    /Cannot find/
   )
 })
 
-runner.test('loadModule: unknown path, module-dir', function () {
+runner.test('unknown request with paths throws', function () {
   a.throws(
-    () => {
-      const mod = loadModule('./adsfdf', {
-        moduleDir: '/some/where/wrong'
-      })
-      console.error(require('util').inspect(mod, { depth: 6, colors: true }))
-    },
-    err => {
-      return err.code === 'MODULE_NOT_FOUND'
-    }
+    () => loadModule('./adsfdf', { paths: '/some/where/wrong' }),
+    /Cannot find/
   )
 })
 
-runner.test('loadModule: absolute path to lib', function () {
+runner.test('absolute path to lib', function () {
   const modulePath = path.resolve(__dirname, '..', 'node_modules/array-back/index.js')
   const module = loadModule(modulePath)
   a.strictEqual(module.name, 'arrayify')
 })
 
-runner.test('loadModule: relative path to a dir', function () {
+runner.test('relative path to a dir', function () {
   const modulePath = path.resolve(__dirname, 'fixture/loadModule/some-module')
   const module = loadModule(modulePath)
   a.strictEqual(module.name, 'someModule')
 })
 
-runner.test('loadModule: full module name', function () {
+runner.test('full module name', function () {
   const module = loadModule('array-back')
   a.strictEqual(module.name, 'arrayify')
 })
 
-runner.test('loadModule: partial module name (module-prefix supplied)', function () {
-  const module = loadModule('back', { modulePrefix: 'array-' })
-  a.strictEqual(module.name, 'arrayify')
-})
-
-runner.test('loadModule: full module name (module-prefix supplied)', function () {
-  const module = loadModule('back', { modulePrefix: 'array-' })
-  a.strictEqual(module.name, 'arrayify')
-})
-
-runner.test('loadModule: full module name, current dir default', function () {
+runner.test('full module name, current dir default', function () {
   const module = loadModule('test/fixture/loadModule/some-module')
   a.strictEqual(module.name, 'someModule')
 })
 
-runner.test('loadModule: full module name, current dir default, module-dir', function () {
+runner.test('full module name, paths', function () {
   const module = loadModule('test/fixture/loadModule/some-module', {
-    moduleDir: '/some/where'
+    paths: [ '.', '/some/where' ]
   })
   a.strictEqual(module.name, 'someModule')
 })
 
-runner.test('loadModule: full module name, module-dir', function () {
-  const module = loadModule('some-module', {
-    moduleDir: path.resolve('test', 'fixture', 'loadModule')
-  })
-  a.strictEqual(module.name, 'someModule')
+runner.test('partial module name (prefix supplied)', function () {
+  const module = loadModule('back', { prefix: 'array-' })
+  a.strictEqual(module.name, 'arrayify')
 })
 
-runner.test('loadModule: full module name, multiple module-dirs', function () {
+runner.test('full module name (prefix supplied)', function () {
+  const module = loadModule('array-back', { prefix: 'array-' })
+  a.strictEqual(module.name, 'arrayify')
+})
+
+runner.test('module folder with paths does not resolve', function () {
+  a.throws(
+    () => loadModule('some-module', { paths: path.resolve('.', 'test', 'fixture', 'loadModule') }),
+    /Cannot find/
+  )
+})
+
+runner.test('full module name, multiple paths', function () {
   const module = loadModule('next-module', {
-    moduleDir: [
+    paths: [
       path.resolve('test', 'fixture', 'loadModule'),
       path.resolve('test', 'fixture', 'loadModule2')
     ]
@@ -88,43 +75,31 @@ runner.test('loadModule: full module name, multiple module-dirs', function () {
   a.strictEqual(module.name, 'nextModule')
 })
 
-runner.test('loadModule: partial module name, multiple module-dirs, module-prefix', function () {
+runner.test('partial module name, multiple paths, prefix', function () {
   const module = loadModule('module', {
-    moduleDir: [
+    paths: [
       path.resolve('test', 'fixture', 'loadModule'),
       path.resolve('test', 'fixture', 'loadModule2')
     ],
-    modulePrefix: 'next-'
+    prefix: 'next-'
   })
   a.strictEqual(module.name, 'nextModule')
 })
 
-runner.test('loadModule: full module name, multiple module-dirs, module-prefix', function () {
+runner.test('full module name, multiple paths, prefix', function () {
   const module = loadModule('next-module', {
-    moduleDir: [
+    paths: [
       path.resolve('test', 'fixture', 'loadModule'),
       path.resolve('test', 'fixture', 'loadModule2')
     ],
-    modulePrefix: 'next-'
+    prefix: 'next-'
   })
   a.strictEqual(module.name, 'nextModule')
-})
-
-runner.test('loadModule: partial module name (module-prefix supplied), module-dir', function () {
-  const module = loadModule('module', {
-    moduleDir: path.resolve('test', 'fixture', 'loadModule'),
-    modulePrefix: 'some-'
-  })
-  a.strictEqual(module.name, 'someModule')
 })
 
 runner.test('broken module', function () {
   a.throws(
-    () => {
-      const mod = loadModule('./test/fixture/broken-module')
-    },
-    err => {
-      return err.code !== 'MODULE_NOT_FOUND'
-    }
+    () => loadModule('./test/fixture/broken-module'),
+    /not defined/
   )
 })
