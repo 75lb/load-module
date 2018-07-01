@@ -2,7 +2,7 @@
   "name": "load-module",
   "author": "Lloyd Brookes <75pound@gmail.com>",
   "version": "0.2.5",
-  "description": "Like node's require but with a few extra features",
+  "description": "Node's `require` with a few extra features",
   "repository": "https://github.com/75lb/load-module.git",
   "license": "MIT",
   "keywords": [

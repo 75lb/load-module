@@ -11,6 +11,12 @@ runner.test('relative path to file', function () {
   a.strictEqual(result.name, 'someModule')
 })
 
+runner.test('relative path to file, paths', function () {
+  const modulePath = './test/fixture/loadModule/some-module/lib/some-module.js'
+  const result = loadModule(modulePath, { paths: '.' })
+  a.strictEqual(result.name, 'someModule')
+})
+
 runner.test('absolute path to file', function () {
   const modulePath = path.resolve(__dirname, '../node_modules/array-back/index.js')
   const result = loadModule(modulePath)

@@ -8,25 +8,33 @@
 <a name="module_load-module"></a>
 
 ## load-module
-Like node's `require` but with a few extra features:
-- You can specify your folders in which to search for modules
+Node's `require` with a few extra features:
+- You can specify additional folders in which to search for modules
 - You can specify a module prefix
 
 **Example**  
 ```js
-const loadModule = require('load-module')
+> const loadModule = require('load-module')
+
+> loadModule('react-dom')
+
+> loadModule('dom', { prefix: 'react-' })
+
+> loadModule('something.js', { paths: '.' })
+
+> loadModule('something.js', { paths: [ '.', '~/my-modules' ] })
 ```
 <a name="exp_module_load-module--loadModule"></a>
 
-### loadModule(modulePath, [options]) ⏏
+### loadModule(request, [options]) ⏏
 **Kind**: Exported function  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| modulePath | <code>string</code> | module identifier |
+| request | <code>string</code> | The module name, directory or file to load. |
 | [options] | <code>object</code> |  |
-| [options.modulePrefix] | <code>string</code> | If the input `moduleID` is `rewrite` and the `module-prefix` is `lws`, load-module will attempt to laod `lws-rewrite` then `rewrite`. |
-| [options.moduleDir] | <code>string</code> \| <code>Array.&lt;string&gt;</code> | An additional location to search for modules. |
+| [options.prefix] | <code>string</code> | Also attempt to load the given module name with this prefix. |
+| [options.paths] | <code>string</code> \| <code>Array.&lt;string&gt;</code> | One or more additional directories in which to search for modules. |
 
 
 * * *

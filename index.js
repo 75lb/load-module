@@ -1,13 +1,18 @@
 /**
- * Typically used by cli app loading plugins.
- *
- * Like node's `require` but with a few extra features:
- * - Seaches `node_modules` in the current working directory by default.
- * - You can specify your folders in which to search for modules
+ * Node's `require` with a few extra features:
+ * - You can specify additional folders in which to search for modules
  * - You can specify a module prefix
  * @module load-module
  * @example
- * const loadModule = require('load-module')
+ * > const loadModule = require('load-module')
+ *
+ * > loadModule('react-dom')
+ *
+ * > loadModule('dom', { prefix: 'react-' })
+ *
+ * > loadModule('something.js', { paths: '.' })
+ *
+ * > loadModule('something.js', { paths: [ '.', '~/my-modules' ] })
  */
 module.exports = loadModule
 
@@ -15,8 +20,8 @@ module.exports = loadModule
  * @alias module:load-module
  * @param {string} - The module name, directory or file to load.
  * @param {object} [options]
- * @param {string} [options.prefix] - If the input `moduleID` is `rewrite` and the `module-prefix` is `lws`, load-module will attempt to laod `lws-rewrite` then `rewrite`.
- * @param {string|string[]} [options.paths] - One of more additional directories to search for modules.
+ * @param {string} [options.prefix] - Also attempt to load the given module name with this prefix.
+ * @param {string|string[]} [options.paths] - One or more additional directories in which to search for modules.
  */
 function loadModule (request, options) {
   if (typeof request !== 'string') {
