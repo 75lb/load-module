@@ -1,6 +1,3 @@
-const path = require('path')
-const arrayify = require('array-back')
-
 /**
  * Typically used by cli app loading plugins.
  *
@@ -14,30 +11,40 @@ const arrayify = require('array-back')
  */
 module.exports = loadModule
 
-const attempted = []
-
 /**
  * @alias module:load-module
- * @param {string} - module identifier
+ * @param {string} - The module name, directory or file to load.
  * @param {object} [options]
- * @param {string} [options.modulePrefix] - If the input `moduleID` is `rewrite` and the `module-prefix` is `lws`, load-module will attempt to laod `lws-rewrite` then `rewrite`.
- * @param {string|string[]} [options.moduleDir] - An additional location to search for modules.
+ * @param {string} [options.prefix] - If the input `moduleID` is `rewrite` and the `module-prefix` is `lws`, load-module will attempt to laod `lws-rewrite` then `rewrite`.
+ * @param {string|string[]} [options.paths] - One of more additional directories to search for modules.
  */
 function loadModule (request, options) {
-  options = Object.assign({ paths: [ '.' ] }, options)
-  if (typeof request === 'string') {
-    if (options.prefix) {
-      try {
-        return require(require.resolve(`${options.prefix}${request}`, { paths: options.paths }))
-      } catch (err) {
-        if (err.code === 'MODULE_NOT_FOUND') {
-          return require(require.resolve(request, { paths: options.paths }))
-        }
-      }
-    } else {
-      return require(require.resolve(request, { paths: options.paths }))
-    }
-  } else {
+  if (typeof request !== 'string') {
     throw new Error('request expected')
   }
+  options = options || {}
+  const arrayify = require('array-back')
+  const prefix = options.prefix
+  const paths = options.paths ? arrayify(options.paths) : undefined
+  const origModulePaths = module.paths
+  if (paths && paths.length) {
+    module.paths = module.paths.concat(paths)
+  }
+  let output
+
+  if (prefix) {
+    /* Try first with the prefix then without */
+    try {
+      output = require(require.resolve(`${options.prefix}${request}`, { paths }))
+    } catch (err) {
+      if (err.code === 'MODULE_NOT_FOUND') {
+        output = require(require.resolve(request, { paths }))
+      }
+    }
+  } else {
+    output = require(require.resolve(request, { paths }))
+  }
+
+  module.paths = origModulePaths
+  return output
 }
