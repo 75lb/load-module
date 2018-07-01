@@ -124,3 +124,10 @@ runner.test('unknown request with paths throws', function () {
     /Cannot find/
   )
 })
+
+runner.test('no request', function () {
+  a.throws(
+    () => loadModule(),
+    /request expected/
+  )
+})

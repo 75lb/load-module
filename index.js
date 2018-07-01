@@ -42,9 +42,7 @@ function loadModule (request, options) {
     try {
       output = require(require.resolve(`${options.prefix}${request}`, { paths }))
     } catch (err) {
-      if (err.code === 'MODULE_NOT_FOUND') {
-        output = require(require.resolve(request, { paths }))
-      }
+      output = require(require.resolve(request, { paths }))
     }
   } else {
     output = require(require.resolve(request, { paths }))
