@@ -39,4 +39,5 @@ Node's `require` with a few extra features:
 
 * * *
 
-&copy; 2017-18 Lloyd Brookes \<75pound@gmail.com\>. Documented by [jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown).
+&copy; 2017-19
+ Lloyd Brookes \<75pound@gmail.com\>. Documented by [jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown).
