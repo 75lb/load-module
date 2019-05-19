@@ -33,8 +33,8 @@ Node's `require` with a few extra features:
 | --- | --- | --- |
 | request | <code>string</code> | The module name, directory or file to load. |
 | [options] | <code>object</code> |  |
-| [options.prefix] | <code>string</code> | Also attempt to load the given module name with this prefix. |
-| [options.paths] | <code>string</code> \| <code>Array.&lt;string&gt;</code> | One or more additional directories in which to search for modules. |
+| [options.paths] | <code>string</code> \| <code>Array.&lt;string&gt;</code> | One or more additional directories in which to search for modules. For each path specified, both the path itself and `${path}/node_modules` will be searched. |
+| [options.prefix] | <code>string</code> | Attempt to load the given module name with this prefix. Only useful where `request` is a module name. |
 
 
 * * *

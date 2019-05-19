@@ -19,8 +19,8 @@
  * @alias module:load-module
  * @param {string} - The module name, directory or file to load.
  * @param {object} [options]
- * @param {string} [options.prefix] - Also attempt to load the given module name with this prefix.
- * @param {string|string[]} [options.paths] - One or more additional directories in which to search for modules.
+ * @param {string|string[]} [options.paths] - One or more additional directories in which to search for modules. For each path specified, both the path itself and `${path}/node_modules` will be searched.
+ * @param {string} [options.prefix] - Attempt to load the given module name with this prefix. Only useful where `request` is a module name.
  */
 function loadModule (request, options) {
   if (typeof request !== 'string') {
