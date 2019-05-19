@@ -14,7 +14,6 @@
  *
  * > loadModule('something.js', { paths: [ '.', '~/my-modules' ] })
  */
-module.exports = loadModule
 
 /**
  * @alias module:load-module
@@ -35,19 +34,77 @@ function loadModule (request, options) {
   if (paths && paths.length) {
     module.paths = module.paths.concat(paths)
   }
-  let output
+  let output = null
 
   if (prefix) {
-    /* Try first with the prefix then without */
     try {
-      output = require(require.resolve(`${options.prefix}${request}`, { paths }))
+      output = loadModule(`${prefix}${request}`, { paths })
     } catch (err) {
-      output = require(require.resolve(request, { paths }))
+      if (err.code === 'MODULE_NOT_FOUND') {
+        output = loadModule(request, { paths })
+      } else {
+        throw err
+      }
     }
   } else {
-    output = require(require.resolve(request, { paths }))
+    output = loadAsLocalPath(request, { paths })
+    if (output === null) {
+      output = loadAsRegularRequire(request, { paths })
+    }
+    if (output === null) {
+      output = tryEachPath(request, { paths })
+    }
   }
 
   module.paths = origModulePaths
+
+  if (output === null) {
+    const err = new Error('Cannot find ' + request)
+    err.code = 'MODULE_NOT_FOUND'
+    throw err
+  } else {
+    return output
+  }
+}
+
+function loadAsLocalPath (request, options) {
+  const path = require('path')
+  let output
+  try {
+    output = require(path.resolve(request), options)
+  } catch (err) {
+    if (err.code === 'MODULE_NOT_FOUND') {
+      output = null
+    } else {
+      throw err
+    }
+  }
   return output
 }
+
+function loadAsRegularRequire (request, options) {
+  let output
+  try {
+    output = require(require.resolve(request, options))
+  } catch (err) {
+    if (err.code === 'MODULE_NOT_FOUND') {
+      output = null
+    } else {
+      throw err
+    }
+  }
+  return output
+}
+
+function tryEachPath (request, options) {
+  const path = require('path')
+  let output = null
+  for (const p of options.paths || []) {
+    const fullPath = path.resolve(p, request)
+    output = loadAsRegularRequire(fullPath)
+    if (output !== null) break
+  }
+  return output
+}
+
+module.exports = loadModule

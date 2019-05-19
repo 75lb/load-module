@@ -3,7 +3,7 @@ const loadModule = require('../')
 const a = require('assert')
 const path = require('path')
 
-const tom = module.exports = new Tom('broken')
+const tom = module.exports = new Tom('exceptions')
 
 tom.test('broken module', function () {
   a.throws(
