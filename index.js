@@ -47,12 +47,12 @@ function loadModule (request, options) {
       }
     }
   } else {
-    output = loadAsLocalPath(request, { paths })
+    output = tryEachPath(request, { paths })
     if (output === null) {
-      output = loadAsRegularRequire(request, { paths })
+      output = loadAsLocalPath(request, { paths })
     }
     if (output === null) {
-      output = tryEachPath(request, { paths })
+      output = loadAsRegularRequire(request, { paths })
     }
   }
 
@@ -85,7 +85,12 @@ function loadAsLocalPath (request, options) {
 function loadAsRegularRequire (request, options) {
   let output
   try {
-    output = require(require.resolve(request, options))
+    /* workaround for node issue #28077 */
+    if (options && options.paths) {
+      output = require(require.resolve(request, options))
+    } else {
+      output = require(require.resolve(request))
+    }
   } catch (err) {
     if (err.code === 'MODULE_NOT_FOUND') {
       output = null

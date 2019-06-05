@@ -106,3 +106,12 @@ tom.test('modulePath: name, paths: absolute [ good, bad ]', function () {
   })
   a.strictEqual(result.name, 'nextModule')
 })
+
+tom.test('modulePath: "index", paths: absolute [ good ]', function () {
+  const result = loadModule('index', {
+    paths: [
+      path.resolve('test', 'fixture', 'loadModule2', 'next-module'),
+    ]
+  })
+  a.strictEqual(result.name, 'nextModule')
+})
