@@ -12,7 +12,7 @@
     "package"
   ],
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10"
   },
   "files": [
     "index.js"
@@ -23,12 +23,12 @@
     "cover": "nyc --reporter=text-lcov npm test | coveralls"
   },
   "devDependencies": {
-    "coveralls": "^3.0.6",
-    "jsdoc-to-markdown": "^5.0.1",
+    "coveralls": "^3.0.8",
+    "jsdoc-to-markdown": "^5.0.3",
     "nyc": "^14.1.1",
-    "test-runner": "^0.6.0"
+    "test-runner": "^0.8.0"
   },
   "dependencies": {
-    "array-back": "^4.0.0"
+    "array-back": "^4.0.1"
   }
 }
