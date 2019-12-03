@@ -1,6 +1,6 @@
 const Tom = require('test-runner').Tom
 const loadModule = require('../')
-const a = require('assert')
+const a = require('assert').strict
 const path = require('path')
 
 const tom = module.exports = new Tom('paths-prefix')
@@ -13,7 +13,7 @@ tom.test('partial module name, multiple paths, prefix', function () {
     ],
     prefix: 'next-'
   })
-  a.strictEqual(result.name, 'nextModule')
+  a.equal(result.name, 'nextModule')
 })
 
 tom.test('module name, multiple paths, prefix', function () {
@@ -24,5 +24,5 @@ tom.test('module name, multiple paths, prefix', function () {
     ],
     prefix: 'next-'
   })
-  a.strictEqual(result.name, 'nextModule')
+  a.equal(result.name, 'nextModule')
 })

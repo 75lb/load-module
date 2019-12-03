@@ -2,7 +2,7 @@
 [![npm module downloads](https://img.shields.io/npm/dt/load-module.svg)](https://www.npmjs.org/package/load-module)
 [![Build Status](https://travis-ci.org/75lb/load-module.svg?branch=master)](https://travis-ci.org/75lb/load-module)
 [![Coverage Status](https://coveralls.io/repos/github/75lb/load-module/badge.svg)](https://coveralls.io/github/75lb/load-module)
-[![Dependency Status](https://david-dm.org/75lb/load-module.svg)](https://david-dm.org/75lb/load-module)
+[![Dependency Status](https://badgen.net/david/dep/75lb/load-module)](https://david-dm.org/75lb/load-module)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard)
 
 <a name="module_load-module"></a>
@@ -39,5 +39,6 @@ Node's `require` with a few extra features:
 
 * * *
 
-&copy; 2017-19
- Lloyd Brookes \<75pound@gmail.com\>. Documented by [jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown).
+&copy; 2017-20 Lloyd Brookes \<75pound@gmail.com\>.
+
+Tested by [test-runner](https://github.com/test-runner-js/test-runner). Documented by [jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown).

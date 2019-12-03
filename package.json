@@ -23,12 +23,17 @@
     "cover": "nyc --reporter=text-lcov npm test | coveralls"
   },
   "devDependencies": {
-    "coveralls": "^3.0.8",
+    "coveralls": "^3.0.9",
     "jsdoc-to-markdown": "^5.0.3",
     "nyc": "^14.1.1",
-    "test-runner": "^0.8.0"
+    "test-runner": "^0.8.7"
   },
   "dependencies": {
     "array-back": "^4.0.1"
+  },
+  "standard": {
+    "ignore": [
+      "test/fixture"
+    ]
   }
 }

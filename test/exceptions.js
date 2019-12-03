@@ -1,7 +1,6 @@
 const Tom = require('test-runner').Tom
 const loadModule = require('../')
 const a = require('assert')
-const path = require('path')
 
 const tom = module.exports = new Tom('exceptions')
 
