@@ -3,7 +3,7 @@ const loadModule = require('../')
 const a = require('assert').strict
 const path = require('path')
 
-const tom = module.exports = new Tom('paths-prefix')
+const tom = module.exports = new Tom()
 
 tom.test('partial module name, multiple paths, prefix', function () {
   const result = loadModule('module', {

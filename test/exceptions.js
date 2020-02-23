@@ -2,7 +2,7 @@ const Tom = require('test-runner').Tom
 const loadModule = require('../')
 const a = require('assert')
 
-const tom = module.exports = new Tom('exceptions')
+const tom = module.exports = new Tom()
 
 tom.test('broken module', function () {
   a.throws(

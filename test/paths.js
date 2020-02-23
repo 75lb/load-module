@@ -3,7 +3,7 @@ const loadModule = require('../')
 const a = require('assert').strict
 const path = require('path')
 
-const tom = module.exports = new Tom('paths')
+const tom = module.exports = new Tom()
 
 tom.test('modulePath: relative file, paths: "."', function () {
   const modulePath = './test/fixture/loadModule/some-module/lib/some-module.js'
