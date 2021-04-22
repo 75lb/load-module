@@ -1,3 +1,8 @@
+import arrayify from 'array-back'
+import path from 'path'
+import { createRequire } from 'module'
+const require = createRequire(import.meta.url)
+
 /**
  * Node's `require` with a few extra features:
  * - You can specify additional folders in which to search for modules
@@ -22,41 +27,43 @@
  * @param {string|string[]} [options.paths] - One or more additional directories in which to search for modules. For each path specified, both the path itself and `${path}/node_modules` will be searched.
  * @param {string} [options.prefix] - Attempt to load the given module name with this prefix. Only useful where `request` is a module name.
  */
-function loadModule (request, options) {
+async function loadModule (request, options) {
   if (typeof request !== 'string') {
     throw new Error('request expected')
   }
   options = options || {}
-  const arrayify = require('array-back')
   const prefix = options.prefix
-  const paths = options.paths ? arrayify(options.paths) : undefined
-  const origModulePaths = module.paths
-  if (paths && paths.length) {
-    module.paths = module.paths.concat(paths)
+  let paths = options.paths ? arrayify(options.paths) : undefined
+  // const origModulePaths = module.paths
+  // if (paths && paths.length) {
+  //   module.paths = module.paths.concat(paths)
+  // }
+  if (!(paths && paths.length)) {
+    paths = [process.cwd()]
   }
   let output = null
 
   if (prefix) {
     try {
-      output = loadModule(`${prefix}${request}`, { paths })
+      output = await loadModule(`${prefix}${request}`, { paths })
     } catch (err) {
       if (err.code === 'MODULE_NOT_FOUND') {
-        output = loadModule(request, { paths })
+        output = await loadModule(request, { paths })
       } else {
         throw err
       }
     }
   } else {
-    output = tryEachPath(request, { paths })
+    output = await tryEachPath(request, { paths })
     if (output === null) {
-      output = loadAsLocalPath(request, { paths })
+      output = await loadAsLocalPath(request, { paths })
     }
     if (output === null) {
-      output = loadAsRegularRequire(request, { paths })
+      output = await loadAsRegularRequire(request, { paths })
     }
   }
 
-  module.paths = origModulePaths
+  // module.paths = origModulePaths
 
   if (output === null) {
     const err = new Error('Cannot find ' + request)
@@ -67,11 +74,34 @@ function loadModule (request, options) {
   }
 }
 
-function loadAsLocalPath (request, options) {
-  const path = require('path')
+async function loadAsLocalPath (request, options) {
+  console.log('loadAsLocalPath')
   let output
   try {
-    output = require(path.resolve(request), options)
+    // console.log(request, options, path.resolve(request))
+    // console.log(require.resolve(path.resolve(request), options))
+    // console.log(require.resolve(request, { paths: [process.cwd()] }))
+    const mod = await import(require.resolve(path.resolve(request), options))
+    output = mod.default
+
+    // output = require(path.resolve(request), options)
+  } catch (err) {
+    console.error('ERR', err)
+    if (err.code === 'MODULE_NOT_FOUND') {
+      output = null
+    } else {
+      throw err
+    }
+  }
+  return output
+}
+
+async function loadAsRegularRequire (request, options) {
+  console.log('loadAsRegularRequire')
+  let output
+  try {
+    const mod = await import(require.resolve(request, options))
+    output = mod.default
   } catch (err) {
     if (err.code === 'MODULE_NOT_FOUND') {
       output = null
@@ -82,34 +112,15 @@ function loadAsLocalPath (request, options) {
   return output
 }
 
-function loadAsRegularRequire (request, options) {
-  let output
-  try {
-    /* workaround for node issue #28077 */
-    if (options && options.paths) {
-      output = require(require.resolve(request, options))
-    } else {
-      output = require(require.resolve(request))
-    }
-  } catch (err) {
-    if (err.code === 'MODULE_NOT_FOUND') {
-      output = null
-    } else {
-      throw err
-    }
-  }
-  return output
-}
-
-function tryEachPath (request, options) {
-  const path = require('path')
+async function tryEachPath (request, options) {
+  console.log('tryEachPath')
   let output = null
   for (const p of options.paths || []) {
     const fullPath = path.resolve(p, request)
-    output = loadAsRegularRequire(fullPath)
+    output = await loadAsRegularRequire(fullPath)
     if (output !== null) break
   }
   return output
 }
 
-module.exports = loadModule
+export default loadModule

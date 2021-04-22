@@ -11,25 +11,26 @@
     "module",
     "package"
   ],
+  "main": "index.mjs",
   "engines": {
-    "node": ">=10"
+    "node": ">=14"
   },
   "files": [
-    "index.js"
+    "index.mjs"
   ],
   "scripts": {
-    "test": "test-runner test/*.js",
-    "docs": "jsdoc2md -t README.hbs index.js > README.md; echo",
+    "test": "test-runner test/*.mjs",
+    "docs": "jsdoc2md -c jsdoc.conf -t README.hbs index.mjs > README.md; echo",
     "cover": "nyc --reporter=text-lcov npm test | coveralls"
   },
   "devDependencies": {
-    "coveralls": "^3.0.9",
-    "jsdoc-to-markdown": "^5.0.3",
-    "nyc": "^14.1.1",
-    "test-runner": "^0.8.12"
+    "coveralls": "^3.1.0",
+    "jsdoc-to-markdown": "^7.0.1",
+    "nyc": "^15.1.0",
+    "test-runner": "^0.8.14"
   },
   "dependencies": {
-    "array-back": "^4.0.1"
+    "array-back": "^6.0.0"
   },
   "standard": {
     "ignore": [
