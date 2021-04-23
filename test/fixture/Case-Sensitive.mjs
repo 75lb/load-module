@@ -1,1 +1,1 @@
-module.exports = 'ok'
+export default 'ok'

@@ -9,10 +9,11 @@ async function loadModuleId (specifier, options = {}) {
     if (options.paths) {
       specifier = require.resolve(specifier, { paths: arrayify(options.paths) })
     }
-    // console.log(specifier)
     const mod = await import(specifier)
+    // console.log(specifier)
     return mod.default
   } catch (err) {
+    // console.error(err)
     if (['MODULE_NOT_FOUND', 'ERR_MODULE_NOT_FOUND'].includes(err.code)) {
       return null
     } else {
@@ -22,6 +23,9 @@ async function loadModuleId (specifier, options = {}) {
 }
 
 async function loadModule (specifier, options = {}) {
+  if (typeof specifier !== 'string') {
+    throw new Error('specifier expected')
+  }
   options = Object.assign({
     paths: [process.cwd()]
   }, options)
@@ -46,7 +50,13 @@ async function loadModule (specifier, options = {}) {
       if (output) break
     }
   }
-  return output
+  if (output === null) {
+    const err = new Error('Cannot find ' + specifier)
+    err.code = 'MODULE_NOT_FOUND'
+    throw err
+  } else {
+    return output
+  }
 }
 
 async function loadBareSpecifier (specifier, options = {}) {

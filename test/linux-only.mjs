@@ -1,21 +1,29 @@
-const Tom = require('test-runner').Tom
-const loadModule = require('../')
-const a = require('assert').strict
-const os = require('os')
+import TestRunner from 'test-runner'
+import loadModule from '../index.mjs'
+import path from 'path'
+import assert from 'assert'
+import os from 'os'
+const a = assert.strict
 
-const tom = module.exports = new Tom()
+import { fileURLToPath } from 'url'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+const tom = new TestRunner.Tom()
 
 if (os.platform() === 'linux') {
-  tom.test('to file', function () {
-    const modulePath = './test/fixture/Case-Sensitive.js'
-    const result = loadModule(modulePath)
+  tom.test('to case-sensitive file', async function () {
+    const modulePath = path.resolve(__dirname, './fixture/Case-Sensitive.mjs')
+    const result = await loadModule(modulePath)
     a.equal(result, 'ok')
   })
 
-  tom.test('incorrect filename case throws', function () {
+  tom.test('incorrect filename case throws', async function () {
     a.throws(
-      () => loadModule('./test/fixture/case-sensitive.js'),
+      async () => await loadModule(path.resolve(__dirname, './fixture/case-sensitive.mjs')),
       /Cannot find/
     )
   })
 }
+
+export default tom
