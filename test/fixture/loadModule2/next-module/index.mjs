@@ -1,1 +1,1 @@
-module.exports = function nextModule () {}
+export default function nextModule () {}

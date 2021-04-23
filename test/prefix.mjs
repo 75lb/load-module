@@ -1,15 +1,18 @@
-const Tom = require('test-runner').Tom
-const loadModule = require('../')
-const a = require('assert').strict
+import TestRunner from 'test-runner'
+import loadModule from '../index.mjs'
+import assert from 'assert'
+const a = assert.strict
 
-const tom = module.exports = new Tom()
+const tom = new TestRunner.Tom()
 
-tom.test('partial module name, prefix', function () {
-  const result = loadModule('back', { prefix: 'array-' })
+tom.test('partial module name, prefix', async function () {
+  const result = await loadModule('back', { prefix: 'array-' })
   a.equal(result.name, 'arrayify')
 })
 
-tom.test('module name, prefix', function () {
-  const result = loadModule('array-back', { prefix: 'array-' })
+tom.test('module name, prefix', async function () {
+  const result = await loadModule('array-back', { prefix: 'array-' })
   a.equal(result.name, 'arrayify')
 })
+
+export default tom

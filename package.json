@@ -34,7 +34,7 @@
   },
   "standard": {
     "ignore": [
-      "test/fixture"
+      "test/fixture", "tmp"
     ]
   }
 }
