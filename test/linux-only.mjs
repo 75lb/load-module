@@ -1,5 +1,5 @@
 import TestRunner from 'test-runner'
-import loadModule from '../index.mjs'
+import { loadModuleSpecifier } from '../index.mjs'
 import path from 'path'
 import assert from 'assert'
 import os from 'os'
@@ -14,15 +14,14 @@ const tom = new TestRunner.Tom()
 if (os.platform() === 'linux') {
   tom.test('to case-sensitive file', async function () {
     const modulePath = path.resolve(__dirname, './fixture/Case-Sensitive.mjs')
-    const result = await loadModule(modulePath)
+    const result = await loadModuleSpecifier(modulePath)
     a.equal(result, 'ok')
   })
 
   tom.test('incorrect filename case throws', async function () {
-    await a.rejects(
-      async () => loadModule(path.resolve(__dirname, './fixture/case-sensitive.mjs')),
-      /Cannot find/
-    )
+    const modulePath = path.resolve(__dirname, './fixture/case-sensitive.mjs')
+    const result = await loadModuleSpecifier(modulePath)
+    a.equal(result, null)
   })
 }
 
