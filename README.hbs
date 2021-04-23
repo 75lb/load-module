@@ -8,6 +8,20 @@
 
 # load-module
 
+Standard [dynamic imports](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#dynamic_imports) but with a few additional features:
+
+- You can supply specific folders in which to search for modules (e.g. any local directory).
+- You can specify a base folder from which to resolve from (e.g. the current working directory).
+
+## Synopsis
+
+```
+> const loadModule = require('load-module')
+> loadModule('react-dom')
+> loadModule('something.mjs', { paths: process.cwd() })
+> loadModule('something.mjs', { paths: [process.cwd(), '~/my-modules'] })
+```
+
 {{>main}}
 
 * * *

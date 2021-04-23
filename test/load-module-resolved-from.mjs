@@ -1,5 +1,5 @@
 import TestRunner from 'test-runner'
-import { loadModulePathRelativeTo } from '../index.mjs'
+import { loadModuleResolvedFrom } from '../index.mjs'
 import path from 'path'
 import assert from 'assert'
 import { fileURLToPath } from 'url'
@@ -11,44 +11,44 @@ const tom = new TestRunner.Tom()
 
 tom.test('CJS file', async function () {
   const modulePath = './test/fixture/loadModule/some-module/lib/some-module.cjs'
-  const result = await loadModulePathRelativeTo(modulePath, process.cwd())
+  const result = await loadModuleResolvedFrom(modulePath, process.cwd())
   a.equal(result.name, 'someModule')
 })
 
 tom.test('MJS file', async function () {
   const modulePath = './test/fixture/loadModule/some-module/lib/some-module.mjs'
-  const result = await loadModulePathRelativeTo(modulePath, process.cwd())
+  const result = await loadModuleResolvedFrom(modulePath, process.cwd())
   a.equal(result.name, 'someModule')
 })
 
-tom.test('CJS file, no ./', async function () {
+tom.test('CJS file, no ./: fails as treated as bare specifier', async function () {
   const modulePath = 'test/fixture/loadModule/some-module/lib/some-module.cjs'
-  const result = await loadModulePathRelativeTo(modulePath, process.cwd())
-  a.equal(result.name, 'someModule')
+  const result = await loadModuleResolvedFrom(modulePath, process.cwd())
+  a.equal(result, null)
 })
 
-tom.test('MJS file, no ./', async function () {
+tom.test('MJS file, no ./: fails as treated as bare specifier', async function () {
   const modulePath = 'test/fixture/loadModule/some-module/lib/some-module.mjs'
-  const result = await loadModulePathRelativeTo(modulePath, process.cwd())
-  a.equal(result.name, 'someModule')
+  const result = await loadModuleResolvedFrom(modulePath, process.cwd())
+  a.equal(result, null)
 })
 
 tom.test('multiple paths, one good one bad', async function () {
   const modulePath = './test/fixture/loadModule/some-module/lib/some-module.cjs'
-  const result = await loadModulePathRelativeTo(modulePath, ['/asdfadsfsd', process.cwd()])
+  const result = await loadModuleResolvedFrom(modulePath, ['/asdfadsfsd', process.cwd()])
   a.equal(result.name, 'someModule')
 })
 
 tom.test('no specifier or paths', async function () {
   await a.rejects(
-    async () => loadModulePathRelativeTo(),
+    async () => loadModuleResolvedFrom(),
     /specifier and paths expected/
   )
 })
 
 tom.test('broken module', async function () {
   await a.rejects(
-    async () => loadModulePathRelativeTo('broken-module.mjs', path.resolve('./test/fixture')),
+    async () => loadModuleResolvedFrom('./broken-module.mjs', path.resolve('./test/fixture')),
     /not defined/
   )
 })
