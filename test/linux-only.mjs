@@ -19,8 +19,8 @@ if (os.platform() === 'linux') {
   })
 
   tom.test('incorrect filename case throws', async function () {
-    a.throws(
-      async () => await loadModule(path.resolve(__dirname, './fixture/case-sensitive.mjs')),
+    await a.rejects(
+      async () => loadModule(path.resolve(__dirname, './fixture/case-sensitive.mjs')),
       /Cannot find/
     )
   })
