@@ -3,9 +3,9 @@ import { loadModuleSpecifier } from '../index.mjs'
 import path from 'path'
 import assert from 'assert'
 import os from 'os'
-const a = assert.strict
 
 import { fileURLToPath } from 'url'
+const a = assert.strict
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
