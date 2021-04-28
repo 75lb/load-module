@@ -1,5 +1,6 @@
 import arrayify from 'array-back'
 import path from 'path'
+import { pathToFileURL } from 'url'
 import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
 
@@ -51,13 +52,13 @@ export async function loadModuleResolvedFrom (specifier, paths) {
  * @param {string} - A valid module path.
  * @param {string|string[]} - One or more additional directories in which to search for the supplied module path.
  */
-export async function loadModulePathRelativeTo (specifier, paths) {
+export async function loadModuleRelativeTo (specifier, paths) {
   if (!(specifier && paths && paths.length)) {
     throw new Error('specifier and paths expected')
   }
   let output = null
   for (const p of arrayify(paths)) {
-    output = await loadModuleSpecifier(path.resolve(p, specifier))
+    output = await loadModuleSpecifier(pathToFileURL(path.resolve(p, specifier)).href)
     if (output) break
   }
   return output
