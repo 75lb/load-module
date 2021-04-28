@@ -2,9 +2,9 @@ import TestRunner from 'test-runner'
 import { loadModuleSpecifier } from '../index.mjs'
 import path from 'path'
 import assert from 'assert'
-import { fileURLToPath } from 'url'
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+import { pathToFileURL } from 'url'
+import getModulePaths from 'current-module-paths'
+const __dirname = getModulePaths(import.meta.url).__dirname
 const a = assert.strict
 
 const tom = new TestRunner.Tom()
@@ -20,13 +20,13 @@ tom.test('bare specifier: not found', async function () {
 })
 
 tom.test('absolute path: cjs found', async function () {
-  const modulePath = path.resolve(__dirname, './fixture/loadModule/some-module/lib/some-module.cjs')
+  const modulePath = pathToFileURL(path.resolve(__dirname, './fixture/loadModule/some-module/lib/some-module.cjs')).href
   const result = await loadModuleSpecifier(modulePath)
   a.equal(result.name, 'someModule')
 })
 
 tom.test('absolute path: cjs not found', async function () {
-  const modulePath = path.resolve(__dirname, './fixture/loadModule/some-module/lib/some-module.cjsasdadsf')
+  const modulePath = pathToFileURL(path.resolve(__dirname, './fixture/loadModule/some-module/lib/some-module.cjsasdadsf')).href
   const result = await loadModuleSpecifier(modulePath)
   a.equal(result, null)
 })
@@ -40,7 +40,7 @@ tom.test('no specifier', async function () {
 
 tom.test('broken module', async function () {
   await a.rejects(
-    async () => loadModuleSpecifier(path.resolve(__dirname, './fixture/broken-module.mjs')),
+    async () => loadModuleSpecifier(pathToFileURL(path.resolve(__dirname, './fixture/broken-module.mjs')).href),
     /not defined/
   )
 })

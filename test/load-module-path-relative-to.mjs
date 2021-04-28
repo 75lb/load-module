@@ -2,9 +2,8 @@ import TestRunner from 'test-runner'
 import { loadModuleRelativeTo } from '../index.mjs'
 import path from 'path'
 import assert from 'assert'
-import { fileURLToPath } from 'url'
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+import getModulePaths from 'current-module-paths'
+const __dirname = getModulePaths(import.meta.url).__dirname
 const a = assert.strict
 
 const tom = new TestRunner.Tom()
