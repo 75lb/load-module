@@ -38,7 +38,7 @@ export async function loadModuleResolvedFrom (specifier, paths) {
   }
   try {
     specifier = require.resolve(specifier, { paths: arrayify(paths) })
-    return loadModuleSpecifier(specifier)
+    return loadModuleSpecifier(pathToFileURL(specifier).href)
   } catch (err) {
     if (['MODULE_NOT_FOUND', 'ERR_MODULE_NOT_FOUND'].includes(err.code)) {
       return null
