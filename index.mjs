@@ -9,6 +9,21 @@ const require = createRequire(import.meta.url)
  * @typicalname loadModule
  */
 
+export async function loadModule (specifier, options = {}) {
+  if (!(options.paths || (options.resolvedFromPaths && options.relativeToPaths))) {
+    throw new Error('Must supply either options.paths or both options.resolvedFromPaths and options.relativeToPaths')
+  }
+  let mod = await loadModuleResolvedFrom(specifier, options.resolvedFromPaths || options.paths)
+  if (mod === null) {
+    mod = await loadModuleRelativeTo(specifier, options.relativeToPaths || options.paths)
+  }
+  if (mod === null) {
+    throw new Error('Module not found: ' + specifier)
+  }
+  return mod
+}
+
+
 /**
  * @param {string} - A valid Node.js module specifier.
  */
