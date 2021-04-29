@@ -13,7 +13,8 @@
     "import",
     "esm"
   ],
-  "main": "index.mjs",
+  "main": "./index.mjs",
+  "exports": "./index.mjs",
   "engines": {
     "node": ">=14"
   },
