@@ -36,8 +36,10 @@ const view = new ViewClass()
 
 | Param | Type | Description |
 | ---   | ---  | --- |
-| specifier | <code>string</code> | A valid Node.js module specifier. |
-| specifier | <code>string</code> | A valid Node.js module specifier. |
+| specifier | `string` | A valid Node.js module specifier. |
+| options.paths | `string[]` | One or more directories to pass to both `loadModuleResolvedFrom` and `loadModuleRelativeTo`. |
+| options.resolvedFromPaths | `string[]` | Specific directories to pass to `loadModuleResolvedFrom`. |
+| options.relativeToPaths | `string[]` | Specific directories to pass to `loadModuleRelativeTo`. |
 
 <a name="module_load-module.loadModuleSpecifier"></a>
 
@@ -47,7 +49,7 @@ const view = new ViewClass()
 
 | Param | Type | Description |
 | --- | --- | --- |
-| specifier | <code>string</code> | A valid Node.js module specifier. |
+| specifier | `string` | A valid Node.js module specifier. |
 
 <a name="module_load-module.loadModuleResolvedFrom"></a>
 
@@ -57,8 +59,8 @@ const view = new ViewClass()
 
 | Param | Type | Description |
 | --- | --- | --- |
-| specifier | <code>string</code> | A valid Node.js module specifier. |
-| paths | <code>string</code> \| <code>Array.&lt;string&gt;</code> | One or more additional directories from which to resolve the supplied specifier from. |
+| specifier | `string` | A valid Node.js module specifier. |
+| paths | `string` \| `Array.<string>` | One or more additional directories from which to resolve the supplied specifier from. |
 
 <a name="module_load-module.loadModuleRelativeTo"></a>
 
@@ -68,8 +70,8 @@ const view = new ViewClass()
 
 | Param | Type | Description |
 | --- | --- | --- |
-| specifier | <code>string</code> | A valid module path. |
-| paths | <code>string</code> \| <code>Array.&lt;string&gt;</code> | One or more additional directories in which to search for the supplied module path. |
+| specifier | `string` | A valid module path. |
+| paths | `string` \| `Array.<string>` | One or more additional directories in which to search for the supplied module path. |
 
 
 * * *
