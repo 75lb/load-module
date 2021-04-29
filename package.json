@@ -2,14 +2,16 @@
   "name": "load-module",
   "author": "Lloyd Brookes <75pound@gmail.com>",
   "version": "4.0.0-2",
-  "description": "Node's `require` with a few extra features",
+  "description": "Standard dynamic imports with a few extra features",
   "repository": "https://github.com/75lb/load-module.git",
   "license": "MIT",
   "keywords": [
     "load",
     "require",
     "module",
-    "package"
+    "package",
+    "import",
+    "esm"
   ],
   "main": "index.mjs",
   "engines": {
@@ -20,14 +22,12 @@
   ],
   "scripts": {
     "test": "test-runner test/*.mjs",
-    "docs": "jsdoc2md -c jsdoc.conf -t README.hbs index.mjs > README.md; echo",
-    "cover": "nyc --reporter=text-lcov npm test | coveralls"
+    "cover": "c8 --reporter=text-lcov npm test | coveralls"
   },
   "devDependencies": {
+    "c8": "^7.7.1",
     "coveralls": "^3.1.0",
     "current-module-paths": "^0.1.0",
-    "jsdoc-to-markdown": "^7.0.1",
-    "nyc": "^15.1.0",
     "test-runner": "^0.9.1"
   },
   "dependencies": {

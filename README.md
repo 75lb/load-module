@@ -8,33 +8,42 @@
 
 # load-module
 
-Standard [dynamic imports](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#dynamic_imports) but with a few additional features:
+Standard [dynamic imports](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#dynamic_imports) intended for runtime loading of user-defined modules (e.g. plugins).
 
-- You can supply specific folders in which to search for modules (e.g. any local directory).
-- You can specify a base folder from which to resolve from (e.g. the current working directory).
+- Search for modules in one or more specific folders.
+- Specify a base folder from which to resolve from (e.g. the current working directory).
 
 ## Synopsis
 
-```
-> const loadModule = require('load-module')
-> loadModule('react-dom')
-> loadModule('something.mjs', { paths: process.cwd() })
-> loadModule('something.mjs', { paths: [process.cwd(), '~/my-modules'] })
-```
+```js
+import { loadModule } from 'load-module'
 
-<a name="module_load-module"></a>
+const ViewClass = await loadModule('default-view', { paths: '~/my-view-folder'})
+const view = new ViewClass()
+```
 
 ## load-module
 
 * [load-module](#module_load-module)
-    * [.loadModuleSpecifier(specifier)](#module_load-module.loadModuleSpecifier)
-    * [.loadModuleResolvedFrom(specifier, paths)](#module_load-module.loadModuleResolvedFrom)
-    * [.loadModulePathRelativeTo(specifier, paths)](#module_load-module.loadModulePathRelativeTo)
+    * [loadModule(specifier, options)](#module_load-module.loadModule)
+    * [loadModuleSpecifier(specifier)](#module_load-module.loadModuleSpecifier)
+    * [loadModuleResolvedFrom(specifier, paths)](#module_load-module.loadModuleResolvedFrom)
+    * [loadModuleRelativeTo(specifier, paths)](#module_load-module.loadModuleRelativeTo)
+
+### <a name="module_load-module.loadModule">loadModule(specifier, options)</a>
+
+**Kind**: exported function
+
+| Param | Type | Description |
+| ---   | ---  | --- |
+| specifier | <code>string</code> | A valid Node.js module specifier. |
+| specifier | <code>string</code> | A valid Node.js module specifier. |
 
 <a name="module_load-module.loadModuleSpecifier"></a>
 
-### loadModule.loadModuleSpecifier(specifier)
-**Kind**: static method of [<code>load-module</code>](#module_load-module)  
+### loadModuleSpecifier(specifier)
+
+**Kind**: exported function
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -42,18 +51,20 @@ Standard [dynamic imports](https://developer.mozilla.org/en-US/docs/Web/JavaScri
 
 <a name="module_load-module.loadModuleResolvedFrom"></a>
 
-### loadModule.loadModuleResolvedFrom(specifier, paths)
-**Kind**: static method of [<code>load-module</code>](#module_load-module)  
+### loadModuleResolvedFrom(specifier, paths)
+
+**Kind**: exported function
 
 | Param | Type | Description |
 | --- | --- | --- |
 | specifier | <code>string</code> | A valid Node.js module specifier. |
 | paths | <code>string</code> \| <code>Array.&lt;string&gt;</code> | One or more additional directories from which to resolve the supplied specifier from. |
 
-<a name="module_load-module.loadModulePathRelativeTo"></a>
+<a name="module_load-module.loadModuleRelativeTo"></a>
 
-### loadModule.loadModulePathRelativeTo(specifier, paths)
-**Kind**: static method of [<code>load-module</code>](#module_load-module)  
+### loadModuleRelativeTo(specifier, paths)
+
+**Kind**: exported function
 
 | Param | Type | Description |
 | --- | --- | --- |

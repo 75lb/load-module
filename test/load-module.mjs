@@ -28,5 +28,13 @@ tom.test('MJS file: invalid options throws', async function () {
   )
 })
 
+tom.test('MJS file: missing module throws', async function () {
+  const modulePath = 'broken'
+  await a.rejects(
+    () => loadModule(modulePath, { paths: process.cwd() }),
+    /Module not found/
+  )
+})
+
 
 export default tom
