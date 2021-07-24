@@ -28,7 +28,7 @@
     "c8": "^7.7.3",
     "coveralls": "^3.1.1",
     "current-module-paths": "^1.0.0",
-    "test-runner": "github:test-runner-js/test-runner"
+    "test-runner": "^0.9.7"
   },
   "dependencies": {
     "array-back": "^6.2.0"
