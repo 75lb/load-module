@@ -1,5 +1,5 @@
 import TestRunner from 'test-runner'
-import { loadModule } from '../index.mjs'
+import { loadModule } from 'load-module'
 import path from 'path'
 import assert from 'assert'
 import getModulePaths from 'current-module-paths'

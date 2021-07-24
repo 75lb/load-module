@@ -1,5 +1,5 @@
 import TestRunner from 'test-runner'
-import { loadModuleSpecifier } from '../index.mjs'
+import { loadModuleSpecifier } from 'load-module'
 import path from 'path'
 import assert from 'assert'
 import os from 'os'
