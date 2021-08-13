@@ -13,7 +13,10 @@
     "import",
     "esm"
   ],
-  "exports": "./index.mjs",
+  "exports": {
+    "import": "./index.mjs",
+    "require": "./dist/index.cjs"
+  },
   "engines": {
     "node": ">=12.17"
   },
@@ -21,7 +24,9 @@
     "index.mjs"
   ],
   "scripts": {
-    "test": "test-runner test/*.mjs",
+    "test": "npm run dist && npm run test:ci",
+    "test:ci": "test-runner test/*.mjs && test-runner test/*.cjs",
+    "dist": "echo MANUALLY CREATE THE CJS DIST",
     "cover": "c8 --reporter=text-lcov npm test | coveralls"
   },
   "devDependencies": {
