@@ -21,7 +21,8 @@
     "node": ">=12.17"
   },
   "files": [
-    "index.mjs"
+    "index.mjs",
+    "dist"
   ],
   "scripts": {
     "test": "npm run dist && npm run test:ci",
