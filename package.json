@@ -3,8 +3,15 @@
   "author": "Lloyd Brookes <75pound@gmail.com>",
   "version": "4.2.1",
   "description": "Standard dynamic imports with a few extra features",
-  "repository": "https://github.com/75lb/load-module.git",
-  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/75lb/load-module.git"
+  },
+  "type": "module",
+  "exports": {
+    "import": "./index.js",
+    "require": "./dist/index.cjs"
+  },
   "keywords": [
     "load",
     "require",
@@ -13,36 +20,31 @@
     "import",
     "esm"
   ],
-  "exports": {
-    "import": "./index.mjs",
-    "require": "./dist/index.cjs"
-  },
+  "license": "MIT",
   "engines": {
-    "node": ">=12.17"
+    "node": ">=12.20"
   },
-  "files": [
-    "index.mjs",
-    "dist"
-  ],
   "scripts": {
     "test": "npm run dist && npm run test:ci",
-    "test:ci": "test-runner test/*.mjs && test-runner test/*.cjs",
-    "dist": "echo MANUALLY CREATE THE CJS DIST",
-    "cover": "c8 --reporter=text-lcov npm test | coveralls"
+    "test:ci": "test-runner test/*.js && test-runner test/*.cjs",
+    "dist": "echo MANUALLY CREATE THE CJS DIST"
   },
+  "files": [
+    "index.js",
+    "dist"
+  ],
   "devDependencies": {
-    "c8": "^7.8.0",
-    "coveralls": "^3.1.1",
-    "current-module-paths": "^1.1.0",
-    "test-runner": "^0.9.8"
+    "current-module-paths": "^1.1.1",
+    "test-runner": "^0.10.1"
   },
   "dependencies": {
-    "array-back": "^6.2.0"
+    "array-back": "^6.2.2"
   },
   "standard": {
     "ignore": [
-      "test/fixture",
-      "tmp"
-    ]
+      "tmp",
+      "dist"
+    ],
+    "envs": []
   }
 }

@@ -40,7 +40,7 @@ tom.test('no specifier', async function () {
 
 tom.test('broken module', async function () {
   await a.rejects(
-    async () => loadModuleSpecifier(pathToFileURL(path.resolve(__dirname, './fixture/broken-module.mjs')).href),
+    async () => loadModuleSpecifier(pathToFileURL(path.resolve(__dirname, './fixture/broken-module.js')).href),
     /not defined/
   )
 })

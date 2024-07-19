@@ -9,19 +9,19 @@ const a = assert.strict
 const tom = new TestRunner.Tom()
 
 tom.test('MJS file: relative to', async function () {
-  const modulePath = 'test/fixture/loadModule/some-module/lib/some-module.mjs'
+  const modulePath = 'test/fixture/loadModule/some-module/lib/some-module.js'
   const result = await loadModule(modulePath, { paths: process.cwd() })
   a.equal(result.name, 'someModule')
 })
 
 tom.test('MJS file: resolved from', async function () {
-  const modulePath = './test/fixture/loadModule/some-module/lib/some-module.mjs'
+  const modulePath = './test/fixture/loadModule/some-module/lib/some-module.js'
   const result = await loadModule(modulePath, { paths: process.cwd() })
   a.equal(result.name, 'someModule')
 })
 
 tom.test('MJS file: invalid options throws', async function () {
-  const modulePath = './test/fixture/loadModule/some-module/lib/some-module.mjs'
+  const modulePath = './test/fixture/loadModule/some-module/lib/some-module.js'
   await a.rejects(
     () => loadModule(modulePath, { resolvedFromPaths: process.cwd() }),
     /Must supply either/

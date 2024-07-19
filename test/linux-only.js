@@ -13,13 +13,13 @@ const tom = new TestRunner.Tom()
 
 if (os.platform() === 'linux') {
   tom.test('to case-sensitive file', async function () {
-    const modulePath = path.resolve(__dirname, './fixture/Case-Sensitive.mjs')
+    const modulePath = path.resolve(__dirname, './fixture/Case-Sensitive.js')
     const result = await loadModuleSpecifier(modulePath)
     a.equal(result, 'ok')
   })
 
   tom.test('incorrect filename case throws', async function () {
-    const modulePath = path.resolve(__dirname, './fixture/case-sensitive.mjs')
+    const modulePath = path.resolve(__dirname, './fixture/case-sensitive.js')
     const result = await loadModuleSpecifier(modulePath)
     a.equal(result, null)
   })
